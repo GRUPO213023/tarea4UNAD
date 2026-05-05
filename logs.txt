@@ -1,0 +1,2 @@
+[2026-05-05 15:43:01] Error cliente: El nombre no puede estar vacío
+[2026-05-05 17:14:23] Error: El costo base debe ser mayor a 0
