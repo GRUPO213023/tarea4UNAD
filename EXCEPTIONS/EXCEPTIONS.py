@@ -8,6 +8,6 @@ class ErrorCliente(Exception):
 class ErrorServicio(Exception):
     pass
 
-# Error relacionado con reservas
+# Error relacionado con reservas 
 class ErrorReserva(Exception):
     pass
