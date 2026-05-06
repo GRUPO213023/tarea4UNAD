@@ -1,4 +1,8 @@
-# Este print sirve para verificar que el programa está corriendo correctamente
+from cliente import Cliente
+from servicio import ServicioSala
+from reserva import Reserva
+from logger import registrar_log
+
 print("Sistema de gestión iniciado")
 #prueba
 # Se define la clase Cliente para representar a los clientes del sistema
@@ -25,16 +29,28 @@ class Cliente:
         print("Cliente:", self.nombre, "- ID:", self.identificacion)
 
 try:
-    nombre = input("Ingrese el nombre: ")
+    # Datos del cliente
+    nombre = input("Ingrese el nombre del cliente: ")
     identificacion = input("Ingrese la identificación: ")
 
     cliente = Cliente(nombre, identificacion)
-    cliente.mostrar_datos()
+
+    # Datos del servicio
+    nombre_servicio = input("Nombre del servicio: ")
+    costo = float(input("Costo base: "))
+    horas = int(input("Horas: "))
+
+    servicio = ServicioSala(nombre_servicio, costo, horas)
+
+    # Crear reserva
+    reserva = Reserva(cliente, servicio)
+    reserva.confirmar()
+
+    reserva.mostrar_reserva()
 
 except Exception as e:
     print("Error:", e)
-    
-from abc import ABC, abstractmethod
+    registrar_log(f"Error: {e}")
 
 
 # MEJORA MÓDULO SERVICIOS
