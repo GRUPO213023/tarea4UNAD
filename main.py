@@ -1,6 +1,6 @@
 # Este print sirve para verificar que el programa está corriendo correctamente
 print("Sistema de gestión iniciado")
-
+#prueba
 # Se define la clase Cliente para representar a los clientes del sistema
 
 class Cliente:
