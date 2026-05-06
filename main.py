@@ -37,60 +37,131 @@ except Exception as e:
 from abc import ABC, abstractmethod
 
 
-# Clase base para los servicios
+# MEJORA MÓDULO SERVICIOS
+
+from abc import ABC, abstractmethod
+
+#  Se crean excepciones personalizadas para manejar errores específicos
+class ServicioError(Exception):
+    pass
+
+class DatoInvalidoError(ServicioError):
+    pass
+
+
+#  Clase abstracta base (ABSTRACCIÓN)
 class Servicio(ABC):
 
     def __init__(self, nombre, costo_base):
-        # Se guarda el nombre del servicio
-        self.nombre = nombre
+        #  Validaciones para garantizar datos correctos (ENCAPSULACIÓN)
+        if not nombre:
+            raise DatoInvalidoError("El nombre del servicio no puede estar vacío")
 
-        # Se guarda el costo base del servicio
+        if costo_base <= 0:
+            raise DatoInvalidoError("El costo base debe ser mayor a 0")
+
+        self.nombre = nombre
         self.costo_base = costo_base
 
-    # Método obligatorio para las clases hijas
+    #  Método abstracto obligatorio (POLIMORFISMO)
     @abstractmethod
-    def calcular_costo(self):
+    def calcular_costo(self, **kwargs):
+        pass
+
+    #  Método abstracto para descripción del servicio
+    @abstractmethod
+    def descripcion(self):
         pass
 
 
-# Servicio de tipo sala
+# SERVICIO SALA
+
+# Herencia desde Servicio
 class ServicioSala(Servicio):
 
     def __init__(self, nombre, costo_base, horas):
-        # Se inicializa la clase padre
         super().__init__(nombre, costo_base)
 
-        # Se guardan las horas de uso
+        # Validación de horas
+        if horas <= 0:
+            raise DatoInvalidoError("Las horas deben ser mayores a 0")
+
         self.horas = horas
 
-    # Se calcula el costo según las horas
-    def calcular_costo(self):
-        return self.costo_base * self.horas
-    
-# Servicio de alquiler de equipos
+    # Parámetro opcional → simula sobrecarga (descuento)
+    def calcular_costo(self, descuento=0):
+        try:
+            costo = self.costo_base * self.horas
+            costo -= costo * descuento
+            return costo
+        except Exception as e:
+            #  Manejo controlado de errores
+            raise ServicioError(f"Error en ServicioSala: {e}")
+
+    def descripcion(self):
+        # Implementación polimórfica
+        return f"Sala reservada por {self.horas} horas"
+
+
+# SERVICIO EQUIPO
+
 class ServicioEquipo(Servicio):
 
     def __init__(self, nombre, costo_base, cantidad):
         super().__init__(nombre, costo_base)
 
-        # Se guarda la cantidad de equipos
+        #  Validación de cantidad
+        if cantidad <= 0:
+            raise DatoInvalidoError("La cantidad debe ser mayor a 0")
+
         self.cantidad = cantidad
 
-    def calcular_costo(self):
-        return self.costo_base * self.cantidad
+    # Parámetro opcional (seguro adicional)
+    def calcular_costo(self, seguro=False):
+        try:
+            costo = self.costo_base * self.cantidad
+
+            if seguro:
+                costo += 20  # costo adicional
+
+            return costo
+        except Exception as e:
+            raise ServicioError(f"Error en ServicioEquipo: {e}")
+
+    def descripcion(self):
+        return f"Alquiler de {self.cantidad} equipos"
 
 
-# Servicio de asesoría
+# SERVICIO ASESORÍA
+
 class ServicioAsesoria(Servicio):
 
     def __init__(self, nombre, costo_base, horas):
         super().__init__(nombre, costo_base)
 
-        # Se guardan las horas de asesoría
+        #  Validación de horas
+        if horas <= 0:
+            raise DatoInvalidoError("Las horas deben ser mayores a 0")
+
         self.horas = horas
 
-    def calcular_costo(self):
-        return self.costo_base * self.horas * 1.2
+    #  Niveles de servicio (lógica extendida)
+    def calcular_costo(self, nivel="normal"):
+        try:
+            multiplicador = 1
+
+            if nivel == "alta":
+                multiplicador = 1.5
+            elif nivel == "premium":
+                multiplicador = 2
+
+            return self.costo_base * self.horas * multiplicador
+
+        except Exception as e:
+            raise ServicioError(f"Error en ServicioAsesoria: {e}")
+
+    def descripcion(self):
+        return f"Asesoría por {self.horas} horas"
     
 # Clase para gestionar reservas
 class Reserva:
@@ -119,3 +190,5 @@ class Reserva:
         print("Servicio:", self.servicio.nombre)
         print("Estado:", self.estado)
         print("Costo:", self.servicio.calcular_costo())
+        
+        #VERIFICACION DE COMMIT
