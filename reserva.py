@@ -1,98 +1,72 @@
-from EXCEPTIONS.EXCEPTIONS import ErrorReserva
-from logger import registrar_log
+from datetime import datetime
 
-# CLASE RESERVA
-# Esta clase une a un Cliente con un Servicio y gestiona el estado de la reserva.
+from entidades import Cliente
+from servicios import Servicio
+from exceptions import DatosInvalidosError, OperacionNoPermitidaError, ReservaError
+
 
 class Reserva:
+    def __init__(self, cliente, servicio, duracion):
+        if not isinstance(cliente, Cliente):
+            raise DatosInvalidosError("La reserva requiere un cliente valido.")
 
-    def __init__(self, cliente, servicio):
-        try:
-            if cliente is None:
-                raise ErrorReserva("No se puede crear una reserva sin cliente")
-            if servicio is None:
-                raise ErrorReserva("No se puede crear una reserva sin servicio")
+        if not isinstance(servicio, Servicio):
+            raise DatosInvalidosError("La reserva requiere un servicio valido.")
 
-            self.cliente = cliente
-            self.servicio = servicio
-            self.estado = "pendiente"
+        if duracion <= 0:
+            raise DatosInvalidosError("La duracion debe ser positiva.")
 
-        except ErrorReserva as error:
-            registrar_log(f"Error al crear reserva: {error}")
-            raise
-
-        else:
-            print(f"Reserva creada para cliente '{cliente.nombre}' con servicio '{servicio.nombre}'")
-
-        finally:
-            print("Proceso de creación de reserva finalizado.")
-
-    # MÉTODO: confirmar()
-    # Cambia el estado de la reserva a "confirmada".
+        self.cliente = cliente
+        self.servicio = servicio
+        self.duracion = duracion
+        self.estado = "creada"
+        self.costo_total = 0
+        self.fecha = datetime.now()
 
     def confirmar(self):
+        if self.estado != "creada":
+            raise OperacionNoPermitidaError("Solo se pueden confirmar reservas creadas.")
+
+        self.servicio.validar_disponibilidad()
+        self.estado = "confirmada"
+
+    def cancelar(self, motivo="Sin motivo"):
+        if self.estado == "procesada":
+            raise OperacionNoPermitidaError("No se puede cancelar una reserva procesada.")
+
+        if self.estado == "cancelada":
+            raise OperacionNoPermitidaError("La reserva ya fue cancelada.")
+
+        self.estado = "cancelada"
+        self.motivo_cancelacion = motivo
+
+    def procesar(self, impuesto=0.19, descuento=0.0, **opciones):
         try:
-            if self.estado != "pendiente":
-                raise ErrorReserva(
-                    f"No se puede confirmar una reserva en estado '{self.estado}'"
-                )
+            if self.estado != "confirmada":
+                raise OperacionNoPermitidaError("La reserva debe estar confirmada antes de procesarse.")
 
-            costo = self.servicio.calcular_costo()
-
-            if costo <= 0:
-                raise ErrorReserva("El costo calculado es inválido (debe ser mayor a 0)")
-
-            self.estado = "confirmada"
-
-        except ErrorReserva as error:
-            registrar_log(f"Error al confirmar: {error}")
-            raise  
+            self.costo_total = self.servicio.calcular_costo_total(
+                self.duracion,
+                impuesto=impuesto,
+                descuento=descuento,
+                **opciones
+            )
 
         except Exception as error:
-            registrar_log(f"Error inesperado al confirmar: {error}")
-            raise
+            raise ReservaError("Fallo el procesamiento de la reserva.") from error
 
         else:
-            print(f"Reserva confirmada. Costo total: ${costo:.2f}")
+            self.estado = "procesada"
+            return self.costo_total
 
         finally:
-            print(f"Intento de confirmación finalizado. Estado actual: {self.estado}")
+            self.ultimo_intento_proceso = datetime.now()
 
-    # MÉTODO: cancelar()
-    # Cancela la reserva
-    
-    def cancelar(self):
-        try:
-            # Una reserva ya cancelada no puede cancelarse de nuevo
-            if self.estado == "cancelada":
-                raise ErrorReserva("La reserva ya está cancelada")
+    def resumen(self):
+        return (
+            f"Reserva {self.estado} | Cliente: {self.cliente.nombre} | "
+            f"Servicio: {self.servicio.nombre} | Costo: ${self.costo_total}"
+        )
 
-            self.estado = "cancelada"
-
-        except ErrorReserva as error:
-            registrar_log(f"Error al cancelar: {error}")
-            raise
-
-        else:
-            print("Reserva cancelada exitosamente.")
-
-        finally:
-            print(f"Proceso de cancelación finalizado. Estado actual: {self.estado}")
-
-    # MÉTODO: mostrar_reserva()
-    # Muestra los datos de la reserva en pantalla.
-
-    def mostrar_reserva(self):
-        try:
-            costo = self.servicio.calcular_costo()
-            print("=" * 40)
-            print(f"  Cliente  : {self.cliente.nombre}")
-            print(f"  ID       : {self.cliente.identificacion}")
-            print(f"  Servicio : {self.servicio.nombre}")
-            print(f"  Estado   : {self.estado}")
-            print(f"  Costo    : ${costo:.2f}")
-            print("=" * 40)
-
-        except Exception as error:
-            registrar_log(f"Error al mostrar reserva: {error}")
-            print(f"No se pudo mostrar la reserva: {error}")
+    def __str__(self):
+        return self.resumen()
