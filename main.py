@@ -164,32 +164,20 @@ class ServicioAsesoria(Servicio):
         return f"Asesoría por {self.horas} horas"
     
 # Clase para gestionar reservas
-class Reserva:
+from cliente import Cliente
+from servicio import Servicio
+from reserva import Reserva
 
-    def __init__(self, cliente, servicio):
-        # Se guarda el cliente asociado
-        self.cliente = cliente
 
-        # Se guarda el servicio asociado
-        self.servicio = servicio
+# Cliente
+cliente1 = Cliente("Paola")
 
-        # Estado inicial de la reserva
-        self.estado = "pendiente"
+# Servicio
+servicio1 = Servicio("Sala de reuniones", 50000)
 
-    # Confirmar la reserva
-    def confirmar(self):
-        self.estado = "confirmada"
+# Reserva
+reserva1 = Reserva(cliente1, servicio1, 3)
 
-    # Cancelar la reserva
-    def cancelar(self):
-        self.estado = "cancelada"
+reserva1.confirmar_reserva()
 
-    # Mostrar información de la reserva
-    def mostrar_reserva(self):
-        print("Cliente:", self.cliente.nombre)
-        print("Servicio:", self.servicio.nombre)
-        print("Estado:", self.estado)
-        print("Costo:", self.servicio.calcular_costo())
-        
-        #VERIFICACION DE COMMIT
-        #fut
+reserva1.mostrar_reserva()
