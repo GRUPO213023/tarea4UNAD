@@ -7,3 +7,5 @@ Reserva confirmada correctamente
 Proceso de reserva finalizado
 Reserva confirmada correctamente
 Proceso de reserva finalizado
+Reserva confirmada correctamente
+Proceso de reserva finalizado
