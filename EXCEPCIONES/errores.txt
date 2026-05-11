@@ -1,0 +1,4 @@
+El costo no puede estar vacío
+Error: costo vacío
+Error: costo vacío
+Error: horas vacías
