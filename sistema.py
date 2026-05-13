@@ -13,6 +13,7 @@ class SistemaGestion:
         print(f"\nOperacion: {descripcion}")
 
         try:
+            self._logger.info(f"Inicia operacion: {descripcion}")
             resultado = operacion()
 
         except SistemaGestionError as error:
@@ -30,11 +31,12 @@ class SistemaGestion:
             return None
 
         else:
+            self._logger.info(f"Operacion exitosa: {descripcion}")
             print(f"  Exito: {resultado}")
             return resultado
 
         finally:
-            pass
+            self._logger.info(f"Finaliza operacion: {descripcion}")
 
     def registrar_cliente(self, cliente):
         for existente in self._clientes:

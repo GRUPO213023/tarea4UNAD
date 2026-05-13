@@ -284,3 +284,384 @@ Traceback (most recent call last):
     raise CalculoCostosError("No fue posible calcular el costo.") from error
 exceptions.CalculoCostosError: No fue posible calcular el costo.
 2026-05-07 09:09:59 - software_fj - INFO - Finaliza operacion: Calculo fallido por impuesto invalido
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Registro invalido de cliente con correo incorrecto': El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 21, in <lambda>
+    Cliente("Ana Gomez", "12345678", "correo-invalido", "3001234567")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 39, in __init__
+    self.correo = correo
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 62, in correo
+    raise DatosInvalidosError(
+exceptions.DatosInvalidosError: El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Registro duplicado de cliente': Ya existe un cliente con ese documento.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 27, in <lambda>
+    lambda: sistema.registrar_cliente(
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 42, in registrar_cliente
+    raise DatosInvalidosError("Ya existe un cliente con ese documento.")
+exceptions.DatosInvalidosError: Ya existe un cliente con ese documento.
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Crear servicio con tarifa negativa': La tarifa base debe ser positiva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 54, in <lambda>
+    ReservaSala("Sala Error", -50000, 10, False)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 75, in __init__
+    super().__init__(nombre, tarifa_base)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 10, in __init__
+    self.tarifa_base = tarifa_base
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 20, in tarifa_base
+    raise DatosInvalidosError("La tarifa base debe ser positiva.")
+exceptions.DatosInvalidosError: La tarifa base debe ser positiva.
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Cancelar reserva ya procesada': No se puede cancelar una reserva procesada.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 76, in <lambda>
+    lambda: reserva_sala.cancelar("Cambio de planes")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 35, in cancelar
+    raise OperacionNoPermitidaError("No se puede cancelar una reserva procesada.")
+exceptions.OperacionNoPermitidaError: No se puede cancelar una reserva procesada.
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Reserva fallida por servicio no disponible': El servicio 'Sala Creativa' no esta disponible.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 83, in <lambda>
+    lambda: sistema.crear_reserva(cliente_luis, sala, 2).confirmar()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 30, in confirmar
+    self.servicio.validar_disponibilidad()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 35, in validar_disponibilidad
+    raise ServicioNoDisponibleError(f"El servicio '{self.nombre}' no esta disponible.")
+exceptions.ServicioNoDisponibleError: El servicio 'Sala Creativa' no esta disponible.
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Procesar reserva sin confirmar': Fallo el procesamiento de la reserva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 46, in procesar
+    raise OperacionNoPermitidaError("La reserva debe estar confirmada antes de procesarse.")
+exceptions.OperacionNoPermitidaError: La reserva debe estar confirmada antes de procesarse.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 94, in <lambda>
+    lambda: reserva_equipo.procesar(unidades=2)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 56, in procesar
+    raise ReservaError("Fallo el procesamiento de la reserva.") from error
+exceptions.ReservaError: Fallo el procesamiento de la reserva.
+2026-05-11 23:52:19 - software_fj - ERROR - Error controlado en 'Calculo fallido por impuesto invalido': No fue posible calcular el costo.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 43, in calcular_costo_total
+    raise ValueError("El impuesto debe estar entre 0 y 1.")
+ValueError: El impuesto debe estar entre 0 y 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 108, in <lambda>
+    lambda: asesoria.calcular_costo_total(2, impuesto=1.5, modalidad="virtual")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 54, in calcular_costo_total
+    raise CalculoCostosError("No fue posible calcular el costo.") from error
+exceptions.CalculoCostosError: No fue posible calcular el costo.
+2026-05-11 23:53:15 - software_fj - ERROR - Error controlado en 'Registro invalido de cliente con correo incorrecto': El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 21, in <lambda>
+    Cliente("Ana Gomez", "12345678", "correo-invalido", "3001234567")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 39, in __init__
+    self.correo = correo
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 62, in correo
+    raise DatosInvalidosError(
+exceptions.DatosInvalidosError: El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+2026-05-11 23:53:15 - software_fj - ERROR - Error controlado en 'Registro duplicado de cliente': Ya existe un cliente con ese documento.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 27, in <lambda>
+    lambda: sistema.registrar_cliente(
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 42, in registrar_cliente
+    raise DatosInvalidosError("Ya existe un cliente con ese documento.")
+exceptions.DatosInvalidosError: Ya existe un cliente con ese documento.
+2026-05-11 23:53:15 - software_fj - ERROR - Error controlado en 'Crear servicio con tarifa negativa': La tarifa base debe ser positiva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 54, in <lambda>
+    ReservaSala("Sala Error", -50000, 10, False)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 75, in __init__
+    super().__init__(nombre, tarifa_base)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 10, in __init__
+    self.tarifa_base = tarifa_base
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 20, in tarifa_base
+    raise DatosInvalidosError("La tarifa base debe ser positiva.")
+exceptions.DatosInvalidosError: La tarifa base debe ser positiva.
+2026-05-11 23:53:15 - software_fj - ERROR - Error controlado en 'Cancelar reserva ya procesada': No se puede cancelar una reserva procesada.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 76, in <lambda>
+    lambda: reserva_sala.cancelar("Cambio de planes")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 35, in cancelar
+    raise OperacionNoPermitidaError("No se puede cancelar una reserva procesada.")
+exceptions.OperacionNoPermitidaError: No se puede cancelar una reserva procesada.
+2026-05-11 23:53:16 - software_fj - ERROR - Error controlado en 'Reserva fallida por servicio no disponible': El servicio 'Sala Creativa' no esta disponible.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 83, in <lambda>
+    lambda: sistema.crear_reserva(cliente_luis, sala, 2).confirmar()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 30, in confirmar
+    self.servicio.validar_disponibilidad()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 35, in validar_disponibilidad
+    raise ServicioNoDisponibleError(f"El servicio '{self.nombre}' no esta disponible.")
+exceptions.ServicioNoDisponibleError: El servicio 'Sala Creativa' no esta disponible.
+2026-05-11 23:53:16 - software_fj - ERROR - Error controlado en 'Procesar reserva sin confirmar': Fallo el procesamiento de la reserva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 46, in procesar
+    raise OperacionNoPermitidaError("La reserva debe estar confirmada antes de procesarse.")
+exceptions.OperacionNoPermitidaError: La reserva debe estar confirmada antes de procesarse.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 94, in <lambda>
+    lambda: reserva_equipo.procesar(unidades=2)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 56, in procesar
+    raise ReservaError("Fallo el procesamiento de la reserva.") from error
+exceptions.ReservaError: Fallo el procesamiento de la reserva.
+2026-05-11 23:53:16 - software_fj - ERROR - Error controlado en 'Calculo fallido por impuesto invalido': No fue posible calcular el costo.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 43, in calcular_costo_total
+    raise ValueError("El impuesto debe estar entre 0 y 1.")
+ValueError: El impuesto debe estar entre 0 y 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 108, in <lambda>
+    lambda: asesoria.calcular_costo_total(2, impuesto=1.5, modalidad="virtual")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 54, in calcular_costo_total
+    raise CalculoCostosError("No fue posible calcular el costo.") from error
+exceptions.CalculoCostosError: No fue posible calcular el costo.
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Registro invalido de cliente con correo incorrecto': El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 21, in <lambda>
+    Cliente("Ana Gomez", "12345678", "correo-invalido", "3001234567")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 39, in __init__
+    self.correo = correo
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 62, in correo
+    raise DatosInvalidosError(
+exceptions.DatosInvalidosError: El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Registro duplicado de cliente': Ya existe un cliente con ese documento.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 27, in <lambda>
+    lambda: sistema.registrar_cliente(
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 42, in registrar_cliente
+    raise DatosInvalidosError("Ya existe un cliente con ese documento.")
+exceptions.DatosInvalidosError: Ya existe un cliente con ese documento.
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Crear servicio con tarifa negativa': La tarifa base debe ser positiva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 54, in <lambda>
+    ReservaSala("Sala Error", -50000, 10, False)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 75, in __init__
+    super().__init__(nombre, tarifa_base)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 10, in __init__
+    self.tarifa_base = tarifa_base
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 20, in tarifa_base
+    raise DatosInvalidosError("La tarifa base debe ser positiva.")
+exceptions.DatosInvalidosError: La tarifa base debe ser positiva.
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Cancelar reserva ya procesada': No se puede cancelar una reserva procesada.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 76, in <lambda>
+    lambda: reserva_sala.cancelar("Cambio de planes")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 35, in cancelar
+    raise OperacionNoPermitidaError("No se puede cancelar una reserva procesada.")
+exceptions.OperacionNoPermitidaError: No se puede cancelar una reserva procesada.
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Reserva fallida por servicio no disponible': El servicio 'Sala Creativa' no esta disponible.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 83, in <lambda>
+    lambda: sistema.crear_reserva(cliente_luis, sala, 2).confirmar()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 30, in confirmar
+    self.servicio.validar_disponibilidad()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 35, in validar_disponibilidad
+    raise ServicioNoDisponibleError(f"El servicio '{self.nombre}' no esta disponible.")
+exceptions.ServicioNoDisponibleError: El servicio 'Sala Creativa' no esta disponible.
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Procesar reserva sin confirmar': Fallo el procesamiento de la reserva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 46, in procesar
+    raise OperacionNoPermitidaError("La reserva debe estar confirmada antes de procesarse.")
+exceptions.OperacionNoPermitidaError: La reserva debe estar confirmada antes de procesarse.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 94, in <lambda>
+    lambda: reserva_equipo.procesar(unidades=2)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 56, in procesar
+    raise ReservaError("Fallo el procesamiento de la reserva.") from error
+exceptions.ReservaError: Fallo el procesamiento de la reserva.
+2026-05-11 23:55:00 - software_fj - ERROR - Error controlado en 'Calculo fallido por impuesto invalido': No fue posible calcular el costo.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 43, in calcular_costo_total
+    raise ValueError("El impuesto debe estar entre 0 y 1.")
+ValueError: El impuesto debe estar entre 0 y 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 16, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 108, in <lambda>
+    lambda: asesoria.calcular_costo_total(2, impuesto=1.5, modalidad="virtual")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 54, in calcular_costo_total
+    raise CalculoCostosError("No fue posible calcular el costo.") from error
+exceptions.CalculoCostosError: No fue posible calcular el costo.
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Registro valido de cliente Luis
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Registro valido de cliente Luis
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Registro valido de cliente Luis
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Registro invalido de cliente con correo incorrecto
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Registro invalido de cliente con correo incorrecto': El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 21, in <lambda>
+    Cliente("Ana Gomez", "12345678", "correo-invalido", "3001234567")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 39, in __init__
+    self.correo = correo
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\entidades.py", line 62, in correo
+    raise DatosInvalidosError(
+exceptions.DatosInvalidosError: El correo debe ser una dirección de correo válida. Recibido: correo-invalido
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Registro invalido de cliente con correo incorrecto
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Registro duplicado de cliente
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Registro duplicado de cliente': Ya existe un cliente con ese documento.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 27, in <lambda>
+    lambda: sistema.registrar_cliente(
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 44, in registrar_cliente
+    raise DatosInvalidosError("Ya existe un cliente con ese documento.")
+exceptions.DatosInvalidosError: Ya existe un cliente con ese documento.
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Registro duplicado de cliente
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Crear servicio de sala
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Crear servicio de sala
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Crear servicio de sala
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Crear servicio de alquiler de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Crear servicio de alquiler de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Crear servicio de alquiler de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Crear servicio de asesoria
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Crear servicio de asesoria
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Crear servicio de asesoria
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Crear servicio con tarifa negativa
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Crear servicio con tarifa negativa': La tarifa base debe ser positiva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 54, in <lambda>
+    ReservaSala("Sala Error", -50000, 10, False)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 75, in __init__
+    super().__init__(nombre, tarifa_base)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 10, in __init__
+    self.tarifa_base = tarifa_base
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 20, in tarifa_base
+    raise DatosInvalidosError("La tarifa base debe ser positiva.")
+exceptions.DatosInvalidosError: La tarifa base debe ser positiva.
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Crear servicio con tarifa negativa
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Crear reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Crear reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Crear reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Confirmar reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Confirmar reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Confirmar reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Procesar reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Procesar reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Procesar reserva de sala
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Cancelar reserva ya procesada
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Cancelar reserva ya procesada': No se puede cancelar una reserva procesada.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 76, in <lambda>
+    lambda: reserva_sala.cancelar("Cambio de planes")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 35, in cancelar
+    raise OperacionNoPermitidaError("No se puede cancelar una reserva procesada.")
+exceptions.OperacionNoPermitidaError: No se puede cancelar una reserva procesada.
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Cancelar reserva ya procesada
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Reserva fallida por servicio no disponible
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Reserva fallida por servicio no disponible': El servicio 'Sala Creativa' no esta disponible.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 83, in <lambda>
+    lambda: sistema.crear_reserva(cliente_luis, sala, 2).confirmar()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 30, in confirmar
+    self.servicio.validar_disponibilidad()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 35, in validar_disponibilidad
+    raise ServicioNoDisponibleError(f"El servicio '{self.nombre}' no esta disponible.")
+exceptions.ServicioNoDisponibleError: El servicio 'Sala Creativa' no esta disponible.
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Reserva fallida por servicio no disponible
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Crear reserva de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Crear reserva de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Crear reserva de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Procesar reserva sin confirmar
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Procesar reserva sin confirmar': Fallo el procesamiento de la reserva.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 46, in procesar
+    raise OperacionNoPermitidaError("La reserva debe estar confirmada antes de procesarse.")
+exceptions.OperacionNoPermitidaError: La reserva debe estar confirmada antes de procesarse.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 94, in <lambda>
+    lambda: reserva_equipo.procesar(unidades=2)
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\reserva.py", line 56, in procesar
+    raise ReservaError("Fallo el procesamiento de la reserva.") from error
+exceptions.ReservaError: Fallo el procesamiento de la reserva.
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Procesar reserva sin confirmar
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Confirmar y procesar reserva de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Operacion exitosa: Confirmar y procesar reserva de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Confirmar y procesar reserva de equipos
+2026-05-12 19:04:07 - software_fj - INFO - Inicia operacion: Calculo fallido por impuesto invalido
+2026-05-12 19:04:07 - software_fj - ERROR - Error controlado en 'Calculo fallido por impuesto invalido': No fue posible calcular el costo.
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 43, in calcular_costo_total
+    raise ValueError("El impuesto debe estar entre 0 y 1.")
+ValueError: El impuesto debe estar entre 0 y 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\sistema.py", line 17, in ejecutar_operacion
+    resultado = operacion()
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\main.py", line 108, in <lambda>
+    lambda: asesoria.calcular_costo_total(2, impuesto=1.5, modalidad="virtual")
+  File "C:\Users\Lenovo\Desktop\tarea4UNAD\servicios.py", line 54, in calcular_costo_total
+    raise CalculoCostosError("No fue posible calcular el costo.") from error
+exceptions.CalculoCostosError: No fue posible calcular el costo.
+2026-05-12 19:04:07 - software_fj - INFO - Finaliza operacion: Calculo fallido por impuesto invalido

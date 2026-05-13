@@ -8,7 +8,7 @@ def configurar_logger():
     LOG_DIR.mkdir(exist_ok=True)
 
     logger = logging.getLogger('software_fj')
-    logger.setLevel(logging.ERROR)
+    logger.setLevel(logging.INFO)
     logger.propagate = False
 
     if not logger.handlers:
